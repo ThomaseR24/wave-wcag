@@ -85,7 +85,7 @@ export default function WaveAnalyzer() {
       return;
     }
 
-    console.log('API Key:', apiKey);
+    //console.log('API Key:', apiKey);
     setIsLoading(true);
     setError(null);
     
