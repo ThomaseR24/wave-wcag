@@ -78,20 +78,29 @@ export default function WaveAnalyzer() {
   const [error, setError] = useState<string | null>(null);
 
   const analyzeUrl = async () => {
+    console.log('API Key:', process.env.NEXT_PUBLIC_WAVE_API_KEY);
     setIsLoading(true);
     setError(null);
     
     try {
-      const apiUrl = `https://wave.webaim.org/api/request?key=${process.env.NEXT_PUBLIC_WAVE_API_KEY}&url=${encodeURIComponent(url)}&reporttype=${reportType}`;
+      const apiUrl = new URL('https://wave.webaim.org/api/request');
+      apiUrl.searchParams.append('key', process.env.NEXT_PUBLIC_WAVE_API_KEY);
+      apiUrl.searchParams.append('url', url);
+      apiUrl.searchParams.append('reporttype', reportType);
+      
+      console.log('Request URL:', apiUrl.toString());
+      
       const response = await fetch(apiUrl);
       const data = await response.json();
+      console.log('API Response:', data);
       
-      if (!data.status.success) {
-        throw new Error(data.status.error || 'Analysis failed');
+      if (!data.status?.success) {
+        throw new Error(data.status?.error || 'Analysis failed');
       }
       
       setResults(data);
     } catch (err) {
+      console.error('Error:', err);
       setError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
       setIsLoading(false);
