@@ -78,19 +78,32 @@ export default function WaveAnalyzer() {
   const [error, setError] = useState<string | null>(null);
 
   const analyzeUrl = async () => {
-    console.log('API Key:', process.env.NEXT_PUBLIC_WAVE_API_KEY);
+    const apiKey = process.env.NEXT_PUBLIC_WAVE_API_KEY;
+    
+    if (!apiKey) {
+      setError('API Key is not configured');
+      return;
+    }
+
+    console.log('API Key:', apiKey);
     setIsLoading(true);
     setError(null);
     
     try {
       const apiUrl = new URL('https://wave.webaim.org/api/request');
-      apiUrl.searchParams.append('key', process.env.NEXT_PUBLIC_WAVE_API_KEY);
+      apiUrl.searchParams.append('key', apiKey);
       apiUrl.searchParams.append('url', url);
       apiUrl.searchParams.append('reporttype', reportType);
       
       console.log('Request URL:', apiUrl.toString());
       
-      const response = await fetch(apiUrl);
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+      
       const data = await response.json();
       console.log('API Response:', data);
       
