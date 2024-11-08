@@ -2,6 +2,16 @@
 
 A Next.js application that uses the WAVE API to analyze web pages for accessibility issues.
 
+## Live Demo
+
+🚀 **[Try the live demo](https://wave-wcag-thomas-er24s-projects.vercel.app/)**
+
+Features available in the demo:
+- Test any public URL for accessibility issues
+- Choose between different report types
+- View detailed accessibility analysis
+- Monitor remaining API credits
+
 ## Setup
 
 1. Clone the repository
