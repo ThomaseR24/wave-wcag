@@ -62,12 +62,20 @@ const LoadingIndicator = () => (
 const renderIcon = (category: string, count: number) => {
   const icon = iconMap[category as keyof typeof iconMap] || '•';
   return (
-    <div className="flex flex-wrap gap-1">
-      {Array(count).fill(0).map((_, i) => (
-        <span key={i} className="inline-block">{icon}</span>
-      ))}
+    <div className="flex items-center gap-2">
+      <span className="inline-block">{icon}</span>
+      <span className="font-bold">{count}</span>
     </div>
   );
+};
+
+const categoryDescriptions: { [key: string]: string } = {
+  error: 'Kritische Barrierefreiheitsprobleme, sofort beheben.',
+  contrast: 'Niedriger Farbkontrast zwischen Text und Hintergrund.',
+  alert: 'Potenzielle Probleme, die überprüft werden sollten.',
+  feature: 'Elemente, die die Barrierefreiheit verbessern.',
+  structure: 'Semantische HTML-Elemente für Struktur und Screenreader.',
+  aria: '(Accessible Rich Internet Applications): Attribute für bessere Zugänglichkeit dynamischer Inhalte.'
 };
 
 export default function WaveAnalyzer() {
@@ -246,6 +254,12 @@ export default function WaveAnalyzer() {
               Results for: {results.statistics.pagetitle}
             </h2>
             
+            {results.categories.error && results.categories.error.count > 0 && (
+              <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
+                <strong>Hinweis:</strong> Ihre Website ist nicht barrierefrei
+              </div>
+            )}
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold mb-3">Summary</h3>
@@ -253,10 +267,11 @@ export default function WaveAnalyzer() {
                   <div key={key} className="mb-4">
                     <div className="flex items-center justify-between mb-1">
                       <span className="font-medium capitalize">{key}</span>
-                      <span className="font-bold">{category.count}</span>
+                      {renderIcon(key, category.count)}
                     </div>
-                    {renderIcon(key, category.count)}
-                    <p className="text-sm text-gray-600 mt-1">{category.description}</p>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {categoryDescriptions[key] || 'Beschreibung nicht verfügbar'}
+                    </p>
                   </div>
                 ))}
               </div>
