@@ -26,20 +26,21 @@ const Summary: React.FC<SummaryProps> = ({
     aria: '♿'
   };
 
-  const renderSummary = () => {
+  const renderSummary = (results: any) => {
     if (!results) return null;
 
     return (
       <div className="bg-gray-50 p-4 rounded-lg">
         <h3 className="text-lg font-semibold mb-3">Summary</h3>
-        {['error', 'contrast', 'alert', 'feature', 'structure', 'aria'].map((key) => (
+        {Object.entries(results.categories).map(([key, category]: [string, any]) => (
           <div key={key} className="mb-4">
             <div className="flex items-center justify-between mb-1">
-              <span className="font-medium capitalize">
-                {iconMap[key as keyof typeof iconMap]} {key}
-              </span>
-              <span className="font-bold">{results.categories[key]?.count || 0}</span>
+              <span className="font-medium capitalize">{key}</span>
+              {renderIcon(key, category.count)}
             </div>
+            <p className="text-sm text-gray-600 mt-1">
+              {categoryDescriptions[key] || 'Beschreibung nicht verfügbar'}
+            </p>
           </div>
         ))}
       </div>
