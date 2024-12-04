@@ -190,7 +190,7 @@ export default function WaveAnalyzer() {
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">WAVE Accessibility Analyzer</h1>
+        <h1 className="text-2xl font-bold">WAVE Accessibility Analyzer (Subscription API)</h1>
         {results && (
           <div className="bg-blue-50 px-4 py-2 rounded-lg">
             <span className="text-blue-700">
