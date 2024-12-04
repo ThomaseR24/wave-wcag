@@ -9,6 +9,15 @@ interface SummaryProps {
   aria: number;
 }
 
+const categoryDescriptions: { [key: string]: string } = {
+  error: 'Kritische Barrierefreiheitsprobleme, sofort beheben.',
+  contrast: 'Niedriger Farbkontrast zwischen Text und Hintergrund.',
+  alert: 'Potenzielle Probleme, die überprüft werden sollten.',
+  feature: 'Elemente, die die Barrierefreiheit verbessern.',
+  structure: 'Semantische HTML-Elemente für Struktur und Screenreader.',
+  aria: 'ARIA (Accessible Rich Internet Applications): Attribute für bessere Zugänglichkeit dynamischer Inhalte.'
+};
+
 const Summary: React.FC<SummaryProps> = ({
   errors,
   contrastErrors,
