@@ -26,6 +26,16 @@ const Summary: React.FC<SummaryProps> = ({
     aria: '♿'
   };
 
+  const renderIcon = (category: string, count: number) => {
+    const icon = iconMap[category as keyof typeof iconMap] || '•';
+    return (
+      <div className="flex items-center gap-2">
+        <span className="inline-block">{icon}</span>
+        <span className="font-bold">{count}</span>
+      </div>
+    );
+  };
+
   const renderSummary = (results: any) => {
     if (!results) return null;
 
